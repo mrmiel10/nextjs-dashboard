@@ -45,9 +45,7 @@ export default function Page() {
       />
         </div>
       </div>
-      <p>ddddddddd</p>
-      <p>ddddddddd</p>
-      <p>ddddddddddddsgd</p>
+    
     </main>
   );
 }
