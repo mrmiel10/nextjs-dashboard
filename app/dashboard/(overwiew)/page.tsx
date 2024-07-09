@@ -7,9 +7,14 @@ import {
   fetchLatestInvoices,
   fetchCardData,
 } from "@/app/lib/data";
+import { Suspense } from 'react';
+import { RevenueChartSkeleton } from '@/app/ui/skeletons';
 
 export default async function Page() {
-  const revenue = await fetchRevenue();
+   const revenue = await fetchRevenue();
+   if (!revenue || revenue.length === 0) {
+    return <p className="mt-4 text-gray-400">No data available.</p>;
+  }
   const latestInvoices = await fetchLatestInvoices();
   const {
     numberOfInvoices,
@@ -34,7 +39,9 @@ export default async function Page() {
         />
       </div>
       <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-4 lg:grid-cols-8">
-        <RevenueChart revenue={revenue} />
+      <Suspense fallback={<RevenueChartSkeleton />}>
+          <RevenueChart revenue={revenue} />
+        </Suspense>
         <LatestInvoices latestInvoices={latestInvoices} />
       </div>
     </main>
