@@ -10,8 +10,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-       <body className={`${inter.className} antialiased`}>{children}</body>
-       <Sonner
+       <body className={`${inter.className} antialiased`}>
+        <main>   {children}</main>
+        <Sonner
     
     closeButton
 richColors
@@ -22,6 +23,8 @@ icons={{
 }}
 
 />
+        </body>
+    
     </html>
   );
 }
