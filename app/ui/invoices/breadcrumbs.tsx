@@ -21,6 +21,7 @@ export default function Breadcrumbs({
             key={breadcrumb.href}
             aria-current={breadcrumb.active}
             className={clsx(
+              "mt-2",
               breadcrumb.active ? 'text-gray-900' : 'text-gray-500',
             )}
           >

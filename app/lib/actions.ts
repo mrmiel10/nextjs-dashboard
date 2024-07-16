@@ -1,5 +1,5 @@
 "use server";
-import Form from "../ui/invoices/create-form";
+
 import { sql } from "@vercel/postgres";
 import { z } from "zod";
 import { revalidatePath } from "next/cache";
@@ -11,7 +11,10 @@ export type State = {
     amount?: string[];
     status?: string[];
   };
-  message?: string | null;
+  message?: {
+    field:string | null,
+    database:string | null,
+  } | null;
 };
 const FormSchema = z.object({
   id: z.string(),
@@ -45,7 +48,10 @@ export default async function createInvoice(prevState: State, formData: FormData
   if (!validatedFields.success) {
     return {
       errors: validatedFields.error.flatten().fieldErrors,
-      message: 'Missing Fields. Failed to Create Invoice.',
+      message:{
+        field:'Missing Fields. Failed to Create Invoice.',
+        database:null
+      } ,
     };
   }
  
@@ -54,17 +60,21 @@ export default async function createInvoice(prevState: State, formData: FormData
   const amountInCents = amount * 100;
   const date = new Date().toISOString().split('T')[0];
   try {
+    console.log("trying access to bd")
     const data = await sql`
     INSERT INTO invoices (customer_id, amount, status, date)
     VALUES (${customerId}, ${amountInCents}, ${status}, ${date})
   `;
 
-  
-  
   } catch (error) {
-    return {
-      message: 'Database Error: Failed to Create Invoice.',
-    };
+    //throw new Error('Database Error: Failed to Create Invoice.');
+     return {
+      message:{
+       field:null,
+        database:'Database Error: Failed to Create Invoice.',
+      } ,
+    
+     };
   }
   
   revalidatePath("/dashboard/invoices");

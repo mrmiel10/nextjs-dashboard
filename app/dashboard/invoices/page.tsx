@@ -1,22 +1,25 @@
-import Pagination from '@/app/ui/invoices/pagination';
-import Search from '@/app/ui/search';
-import Table from '@/app/ui/invoices/table';
-import { CreateInvoice } from '@/app/ui/invoices/buttons';
-import { poppins } from '@/app/ui/fonts';
-import { InvoicesTableSkeleton } from '@/app/ui/skeletons';
-import { Suspense } from 'react';
-import { fetchInvoicesPages } from '@/app/lib/data';
-export default async function Page({
+
+import Pagination from "@/app/ui/invoices/pagination";
+import Search from "@/app/ui/search";
+import Table from "@/app/ui/invoices/table";
+import { CreateInvoice } from "@/app/ui/invoices/buttons";
+import { poppins } from "@/app/ui/fonts";
+import { InvoicesTableSkeleton } from "@/app/ui/skeletons";
+import { Suspense } from "react";
+import { fetchInvoicesPages } from "@/app/lib/data";
+
+export default function Home({
   searchParams,
 }: {
   searchParams?: {
     query?: string;
     page?: string;
-  };}) {
-    const query = searchParams?.query || '';
-    const currentPage = Number(searchParams?.page) || 1;
-    console.log(currentPage)
-    const totalPages = await fetchInvoicesPages(query);
+  };
+}) {
+  const query = searchParams?.query || "";
+  const currentPage = Number(searchParams?.page) || 1;
+  console.log(currentPage);
+
   return (
     <div className="w-full">
       <div className="flex w-full items-center justify-between">
@@ -26,12 +29,28 @@ export default async function Page({
         <Search placeholder="Search invoices..." />
         <CreateInvoice />
       </div>
-       <Suspense key={query + currentPage} fallback={<InvoicesTableSkeleton />}>
-        <Table query={query} currentPage={currentPage} />
+
+      <Suspense key={query + currentPage} fallback={<InvoicesTableSkeleton />}>
+        <ShowTable query={query} currentPage={currentPage} />
       </Suspense>
-      <div className="mt-5 flex w-full justify-center">
-         <Pagination totalPages={totalPages} />
-      </div>
     </div>
   );
 }
+const ShowTable = async ({
+  query,
+  currentPage,
+}: {
+  query: string;
+  currentPage: number;
+}) => {
+  const totalPages = await fetchInvoicesPages(query);
+  return (
+    <>
+      <Table query={query} currentPage={currentPage} />
+
+      <div className="mt-5 flex w-full justify-center">
+        <Pagination totalPages={totalPages} />
+      </div>
+    </>
+  );
+};

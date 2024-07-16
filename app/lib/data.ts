@@ -170,6 +170,8 @@ if(!invoice ) return null
 
 export async function fetchCustomers() {
   try {
+    console.log('Fetching revenue data...');
+    //  await new Promise((resolve) => setTimeout(resolve, 100000));
     const data = await sql<CustomerField>`
       SELECT
         id,

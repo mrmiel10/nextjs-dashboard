@@ -216,3 +216,46 @@ export function InvoicesTableSkeleton() {
     </div>
   );
 }
+export function FormCreateInvoiceSkeleton(){
+  return(
+  <>
+    <div
+        className={`${shimmer} relative o mb-4 h-8 w-36 overflow-hidden rounded-md bg-gray-100`}
+      />
+      <div className={`${shimmer} relative overflow-hidden rounded-md bg-gray-50 p-4 md:p-6`}>
+        <div className="mb-4">
+          <div className={`${shimmer} relative overflow-hidden mb-2 h-4 w-36 rounded-md bg-gray-100`} />
+          <div className="h-8 w-full rounded-md bg-white " />
+
+        </div>
+        <div className="mb-4">
+          <div className={`${shimmer} relative overflow-hidden mb-2 h-4 w-36 rounded-md bg-gray-100`} />
+          <div className="h-8 w-full rounded-md bg-white " />
+
+        </div>
+        <div className="">
+          <div className={`${shimmer} relative overflow-hidden mb-2 h-4 w-36 rounded-md bg-gray-100`} />
+          <div className="rounded-md border border-gray-200  px-[14px] py-3 w-full h-16  bg-white ">
+            <div className="flex gap-4">
+              <div className="flex items-center">
+                <div className={`${shimmer} relative overflow-hidden h-5 w-5 rounded-full border-gray-300 bg-gray-100`}></div>
+                <div className={`${shimmer} relative overflow-hidden ml-2 h-8 w-24 rounded-full bg-gray-200`}/>
+              </div>
+              <div className="flex items-center">
+                <div className={`${shimmer} relative overflow-hidden h-5 w-5 rounded-full border-gray-300 bg-gray-100`}></div>
+                <div className={`${shimmer} relative overflow-hidden ml-2 h-8 w-20 rounded-full bg-gray-200`}/>
+              </div>
+            </div>
+          </div>
+
+        </div>
+       
+      </div>
+      <div className="mt-6 flex justify-end gap-4">
+          <div   className={`${shimmer} relative overflow-hidden w-20 h-10  rounded-lg bg-gray-200`}/>
+          <div    className={`${shimmer} relative overflow-hidden w-28 h-10  rounded-lg bg-gray-200`}/>
+        </div>
+
+  </>
+  )
+}

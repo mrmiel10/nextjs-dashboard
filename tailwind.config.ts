@@ -7,7 +7,16 @@ const config: Config = {
     './app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
+    // container:{
+    //   screens:{
+    //     "s-352":"352px",
+    //   }
+    // },
+
     extend: {
+      // screens:{
+
+      // }
       gridTemplateColumns: {
         '13': 'repeat(13, minmax(0, 1fr))',
       },
