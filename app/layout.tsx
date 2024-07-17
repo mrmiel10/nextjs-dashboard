@@ -16,8 +16,8 @@ export default function RootLayout({
           closeButton
           richColors
           icons={{
-            error: <CircleX className="size-5" />,
-            success: <CircleCheckIcon className="size-5" />,
+            error: <CircleX className="size-4" />,
+            success: <CircleCheckIcon className="size-4" />,
           }}
         />
       </body>

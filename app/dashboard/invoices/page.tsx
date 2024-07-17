@@ -1,5 +1,5 @@
 
-import Pagination from "@/app/ui/invoices/pagination";
+import PaginationTable from "@/app/ui/invoices/pagination";
 import Search from "@/app/ui/search";
 import Table from "@/app/ui/invoices/table";
 import { CreateInvoice } from "@/app/ui/invoices/buttons";
@@ -7,7 +7,15 @@ import { poppins } from "@/app/ui/fonts";
 import { InvoicesTableSkeleton } from "@/app/ui/skeletons";
 import { Suspense } from "react";
 import { fetchInvoicesPages } from "@/app/lib/data";
-
+// import {
+//   Pagination,
+//   PaginationContent,
+//   PaginationEllipsis,
+//   PaginationItem,
+//   PaginationLink,
+//   PaginationNext,
+//   PaginationPrevious,
+// } from "@/components/ui/pagination"
 export default function Home({
   searchParams,
 }: {
@@ -33,6 +41,7 @@ export default function Home({
       <Suspense key={query + currentPage} fallback={<InvoicesTableSkeleton />}>
         <ShowTable query={query} currentPage={currentPage} />
       </Suspense>
+      {/* <pagination /> */}
     </div>
   );
 }
@@ -49,8 +58,36 @@ const ShowTable = async ({
       <Table query={query} currentPage={currentPage} />
 
       <div className="mt-5 flex w-full justify-center">
-        <Pagination totalPages={totalPages} />
+        <PaginationTable totalPages={totalPages} />
       </div>
     </>
   );
 };
+// export const  pagination = () =>{
+//   return (
+//   <Pagination>
+//   <PaginationContent>
+//     <PaginationItem>
+//       <PaginationPrevious href="#" />
+//     </PaginationItem>
+//     <PaginationItem>
+//       <PaginationLink href="#">1</PaginationLink>
+//     </PaginationItem>
+//     <PaginationItem>
+//       <PaginationLink href="#" isActive>
+//         2
+//       </PaginationLink>
+//     </PaginationItem>
+//     <PaginationItem>
+//       <PaginationLink href="#">3</PaginationLink>
+//     </PaginationItem>
+//     <PaginationItem>
+//       <PaginationEllipsis />
+//     </PaginationItem>
+//     <PaginationItem>
+//       <PaginationNext href="#" />
+//     </PaginationItem>
+//   </PaginationContent>
+// </Pagination>
+// )
+// }

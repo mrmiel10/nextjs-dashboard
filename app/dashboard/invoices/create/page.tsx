@@ -3,8 +3,8 @@ import Breadcrumbs from '@/app/ui/invoices/breadcrumbs';
 import { fetchCustomers } from '@/app/lib/data';
  
 export default async function InvoiceCreate() {
-  await new Promise((resolve) => setTimeout(resolve, 3000));
-   // const customers = await fetchCustomers();
+  // await new Promise((resolve) => setTimeout(resolve, 3000));
+  //  // const customers = await fetchCustomers();
    
   const customers = [
     {

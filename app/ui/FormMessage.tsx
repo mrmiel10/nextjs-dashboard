@@ -3,7 +3,7 @@ import clsx from "clsx";
 const FormMessage = ({ id, error }: { id: string; error?: string[] }) => {
   return (
     <div id={id} aria-live="polite" aria-atomic="true">
-      {error &&
+       {error ? (
         error.map((err: string) => (
           <p className={clsx(
           " text-sm text-red-500",
@@ -11,7 +11,20 @@ const FormMessage = ({ id, error }: { id: string; error?: string[] }) => {
           key={err}>
             {err}
           </p>
-        ))}
+        ))
+      ):(
+        <></>
+      )
+      }
+      {/* {error &&
+        error.map((err: string) => (
+          <p className={clsx(
+          " text-sm text-red-500",
+          id === "status-error" ? 'mt-0' : 'mt-2', )} 
+          key={err}>
+            {err}
+          </p>
+        ))} */}
     </div>
   );
 };

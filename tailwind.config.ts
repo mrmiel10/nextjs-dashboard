@@ -1,6 +1,7 @@
 import type { Config } from 'tailwindcss';
 
 const config: Config = {
+
   content: [
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
     './components/**/*.{js,ts,jsx,tsx,mdx}',
@@ -14,9 +15,9 @@ const config: Config = {
     // },
 
     extend: {
-      // screens:{
-
-      // }
+       screens:{
+        xs:"384px",
+       },
       gridTemplateColumns: {
         '13': 'repeat(13, minmax(0, 1fr))',
       },
@@ -34,11 +35,17 @@ const config: Config = {
           transform: 'translateX(100%)',
         },
       },
+      "spin":{
+        to:{
+          transform: "rotate(360deg)",
+        }
+      }
     },
     animation:{
-      shimmer: 'shimmer 2s infinite',
+      "shimmer": "shimmer 2s infinite",
+      "spin": "spin 1s linear infinite",
     }
   },
-  plugins: [require('@tailwindcss/forms')],
+  plugins: [require("tailwindcss-animate")],
 };
 export default config;
