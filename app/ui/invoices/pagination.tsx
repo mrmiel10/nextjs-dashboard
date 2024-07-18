@@ -21,7 +21,7 @@ export default function PaginationTable({
   // NOTE: Uncomment this code in Chapter 11
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const currentPage = Number(searchParams.get("page"));
+  const currentPage = Number(searchParams.get("page")) || 1;
   const allPages = generatePagination(currentPage, totalPages);
   const createPageURL = (pageNumber: number | string) => {
     const params = new URLSearchParams(searchParams);
@@ -29,11 +29,11 @@ export default function PaginationTable({
     return `${pathname}?${params.toString()}`;
   };
 
-  console.log(totalPages);
+  
   return (
     <>
-   
-      <Pagination>
+    {totalPages ? (
+        <Pagination>
         <PaginationContent>
           <PaginationItem>
             <PaginationPrevious
@@ -72,6 +72,9 @@ export default function PaginationTable({
         </PaginationContent>
       </Pagination>
       
+    ):null}
+   
+    
     </>
   );
   // return (

@@ -13,6 +13,7 @@ export type State = {
   };
 
   error?: string;
+  success?:string
 };
 
 const FormSchema = z.object({
@@ -67,16 +68,19 @@ export default async function createInvoice(
     console.log("trying access to bd");
     const data = await sql`
     INSERT INTO invoices (customer_id, amount, status, date)
-    VALUES (${customerId}, ${amountInCents}, ${status}, ${date})
-  `;
+    VALUES (${customerId}, ${amountInCents}, ${status}, ${date}) `;
+    return {
+      success:'Invoice has been created successfully'
+    }
+
   } catch (error) {
     return {
       error: "Database Error: Failed to Create Invoice.",
     };
   }
 
-  revalidatePath("/dashboard/invoices");
-  redirect("/dashboard/invoices");
+  // revalidatePath("/dashboard/invoices");
+  // redirect("/dashboard/invoices");
 }
 const UpdateInvoice = FormSchema.omit({ id: true, date: true });
 
@@ -92,8 +96,7 @@ export async function updateInvoice(id: string, formData: FormData) {
   await sql`
       UPDATE invoices
       SET customer_id = ${customerId}, amount = ${amountInCents}, status = ${status}
-      WHERE id = ${id}
-    `;
+      WHERE id = ${id}`;
 
   revalidatePath("/dashboard/invoices");
   redirect("/dashboard/invoices");

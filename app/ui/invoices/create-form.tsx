@@ -13,24 +13,30 @@ import { State } from "@/app/lib/actions";
 import FormMessage from "../FormMessage";
 
 import { CreateInvoiceButton } from "../SubmitButtons";
-import { buttonVariants } from "@/components/ui/button";
-import clsx from "clsx";
 import { toast } from "sonner";
+import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 export default function Form({ customers }: { customers: CustomerField[] }) {
   const initialState: State = {
-    error: undefined,   
+    error: undefined,
+    success: undefined,
     errors: {},
   };
-  const [state,formAction,isPending] = useActionState(createInvoice, initialState);
+  const [state, formAction, isPending] = useActionState(
+    createInvoice,
+    initialState
+  );
 
   useEffect(() => {
-    if (state.error){
+    if (state.error) {
       toast.error(state.error);
-      return 
-    } 
-    if(!state.error && isPending)
-    toast.success("Invoice has been created successful")
-    
+      return;
+    }
+    if (state.success) {
+      toast.success("Invoice has been created successful");
+     // revalidatePath("/dashboard/invoices");
+      redirect("/dashboard/invoices");
+    }
   }, [state]);
 
   return (

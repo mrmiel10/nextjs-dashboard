@@ -3,7 +3,8 @@ import { UpdateInvoice, DeleteInvoice } from '@/app/ui/invoices/buttons';
 import InvoiceStatus from '@/app/ui/invoices/status';
 import { formatDateToLocal, formatCurrency } from '@/app/lib/utils';
 import { fetchFilteredInvoices } from '@/app/lib/data';
-
+import { Frown } from 'lucide-react';
+import clsx from 'clsx';
 export default async function InvoicesTable({
   query,
   currentPage,
@@ -16,9 +17,19 @@ export default async function InvoicesTable({
   return (
     <div className="mt-6 flow-root">
       <div className="inline-block min-w-full align-middle">
-        <div className="rounded-lg bg-gray-50 p-2 md:pt-0">
+        <div className={clsx(
+          "rounded-lg p-2 md:pt-0",
+          invoices.length ? 'bg-gray-50' : 'bg-white'
+        )}>
+        
           <div className="md:hidden">
-            {invoices?.map((invoice) => (
+          {!invoices.length ? (
+                <div  className=" h-24 w-full p-4 flex flex-col  justify-center items-center">
+                <Frown size={40} className=' text-slate-300' strokeWidth={1.25}/>
+                  <span>No results found!</span>
+                </div>
+          ):(
+            invoices?.map((invoice) => (
               <div
                 key={invoice.id}
                 className="mb-2 w-full rounded-md bg-white p-4"
@@ -52,7 +63,9 @@ export default async function InvoicesTable({
                   </div>
                 </div>
               </div>
-            ))}
+            ))
+          )}
+           
           </div>
           <table className="hidden min-w-full text-gray-900 md:table">
             <thead className="rounded-lg text-left text-sm font-normal">
@@ -78,43 +91,58 @@ export default async function InvoicesTable({
               </tr>
             </thead>
             <tbody className="bg-white">
-              {invoices?.map((invoice) => (
+              {invoices?.length ? (
+                    invoices?.map((invoice) => (
+                      <tr
+                        key={invoice.id}
+                        className="w-full border-b py-3 text-sm last-of-type:border-none [&:first-child>td:first-child]:rounded-tl-lg [&:first-child>td:last-child]:rounded-tr-lg [&:last-child>td:first-child]:rounded-bl-lg [&:last-child>td:last-child]:rounded-br-lg"
+                      >
+                        <td className="whitespace-nowrap py-3 pl-6 pr-3">
+                          <div className="flex items-center gap-3">
+                            <Image
+                              src={invoice.image_url}
+                              className="rounded-full"
+                              width={28}
+                              height={28}
+                              alt={`${invoice.name}'s profile picture`}
+                            />
+                            <p>{invoice.name}</p>
+                          </div>
+                        </td>
+                        <td className="whitespace-nowrap px-3 py-3">
+                          {invoice.email}
+                        </td>
+                        <td className="whitespace-nowrap px-3 py-3">
+                          {formatCurrency(invoice.amount)}
+                        </td>
+                        <td className="whitespace-nowrap px-3 py-3">
+                          {formatDateToLocal(invoice.date)}
+                        </td>
+                        <td className="whitespace-nowrap px-3 py-3">
+                          <InvoiceStatus status={invoice.status} />
+                        </td>
+                        <td className="whitespace-nowrap py-3 pl-6 pr-3">
+                          <div className="flex justify-end gap-3">
+                            <UpdateInvoice id={invoice.id} />
+                            <DeleteInvoice id={invoice.id} />
+                          </div>
+                        </td>
+                      </tr>
+                    ))
+              ):(
                 <tr
-                  key={invoice.id}
-                  className="w-full border-b py-3 text-sm last-of-type:border-none [&:first-child>td:first-child]:rounded-tl-lg [&:first-child>td:last-child]:rounded-tr-lg [&:last-child>td:first-child]:rounded-bl-lg [&:last-child>td:last-child]:rounded-br-lg"
-                >
-                  <td className="whitespace-nowrap py-3 pl-6 pr-3">
-                    <div className="flex items-center gap-3">
-                      <Image
-                        src={invoice.image_url}
-                        className="rounded-full"
-                        width={28}
-                        height={28}
-                        alt={`${invoice.name}'s profile picture`}
-                      />
-                      <p>{invoice.name}</p>
+                       
+                        className="w-full border-b py-3 text-sm last-of-type:border-none [&:first-child>td:first-child]:rounded-tl-lg [&:first-child>td:last-child]:rounded-tr-lg [&:last-child>td:first-child]:rounded-bl-lg [&:last-child>td:last-child]:rounded-br-lg"
+                      >
+                  <td colSpan={6}  className="w-full h-24 items-center text-center whitespace-nowrap py-3 pl-6 pr-3">
+                    <div className='w-full flex justify-center'>
+                    <Frown size={40} className=' text-slate-300' strokeWidth={1.25}/>
                     </div>
-                  </td>
-                  <td className="whitespace-nowrap px-3 py-3">
-                    {invoice.email}
-                  </td>
-                  <td className="whitespace-nowrap px-3 py-3">
-                    {formatCurrency(invoice.amount)}
-                  </td>
-                  <td className="whitespace-nowrap px-3 py-3">
-                    {formatDateToLocal(invoice.date)}
-                  </td>
-                  <td className="whitespace-nowrap px-3 py-3">
-                    <InvoiceStatus status={invoice.status} />
-                  </td>
-                  <td className="whitespace-nowrap py-3 pl-6 pr-3">
-                    <div className="flex justify-end gap-3">
-                      <UpdateInvoice id={invoice.id} />
-                      <DeleteInvoice id={invoice.id} />
-                    </div>
-                  </td>
+                    
+                    <span>No results found!</span></td>
                 </tr>
-              ))}
+              )}
+          
             </tbody>
           </table>
         </div>
